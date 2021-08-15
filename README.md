@@ -4,9 +4,9 @@
 * Perl 5.14 or later
 * The Date::Manip module from CPAN
 
-This should install all of the prerequisites:
+This should install all of the prerequisites on an Ubuntu or Debian-flavored Linux:
 ```bash
-sudo apt-get install perl libdate-manip-perl
+sudo apt-get -y install perl libdate-manip-perl
 ```
 
 ## To run
@@ -15,11 +15,9 @@ As specified, the program expects UTF-8 CSV from STDIN
 and produces UTF-8 CSV on STDOUT. For example:
 
 ```bash
-perl normalize.pl < sample.csv > output.csv
+perl normalizer.pl < sample.csv > output.csv
 ```
 
 ## Other Notes
 
 Tested on Raspbian GNU/Linux 10 (buster).
-
-Please submit your solution by emailing a link to [hiring@truss.works](mailto:hiring@truss.works). More details on what we are looking for are included in each problem description linked to below.

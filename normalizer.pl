@@ -15,7 +15,7 @@ use Encode qw(decode encode);
 use Text::ParseWords;
 
 # Additional libraries:
-# use Date::Manip;
+use Date::Manip qw( ParseDate UnixDate Date_ConvTZ );
 
 sub debug {
     my ( @msgs ) = @_;
@@ -24,18 +24,18 @@ sub debug {
 }
 
 my $raw_input = join "\n", <>;
-debug "STARTUP READ " . length( $raw_input ) . " characters";
+# debug "STARTUP READ " . length( $raw_input ) . " characters";
 my $raw_octets = decode('UTF-8', $raw_input, Encode::FB_DEFAULT);
 # $raw_octets is now a bytestream of the input, with replacement character
 my $csv = encode('UTF-8', $raw_octets, Encode::FB_CROAK); 
 # $csv is now a real, clean UTF-8 string
-debug "STARTUP CLEAN " . length( $csv ) . " characters";
+# debug "STARTUP CLEAN " . length( $csv ) . " characters";
 
 my ( $header_line, @data_lines ) = split /\n+/, $csv;
 
 say $header_line;
 
-debug "STARTUP LINES " . @data_lines;
+# debug "STARTUP LINES " . @data_lines;
 say process_line( $_ ) foreach @data_lines;
 
 
@@ -43,11 +43,13 @@ sub process_line {
     my ( $raw_line ) = @_;
     # debug "PROCESS IN: [$raw_line]";
     my @fields = quotewords( ',', 0, $raw_line );
-    my $test_field = 0;
-    debug "FIELD [$test_field] IN : [" . $fields[$test_field] . ']';
 
     # 0: Timestamp: Convert to RFC3339, adjust PT to ET
-    my $pac_time = $fields[0] . ' PT';
+    my $pt_date = ParseDate( $fields[0] );
+    return if not $pt_date;
+    my $et_date = Date_ConvTZ( $pt_date, 'America/Los_Angeles', 'America/New_York' );
+    return if not $et_date;
+    $fields[0] = UnixDate( $et_date, '%O%z' );
 
     # 1: Address: No change
     $fields[1] = $fields[1];
@@ -86,7 +88,6 @@ sub process_line {
     #   explicity that the lack of processing
     #   is intentional
 
-    debug "FIELD [$test_field] OUT: [" . $fields[$test_field] . ']';
     my $result_line = join ',', @fields;
     #debug "PROCESS OUT: [$result_line]";
     return $result_line;
