@@ -20,4 +20,6 @@ perl normalize.pl < sample.csv > output.csv
 
 ## Other Notes
 
+Tested on Raspbian GNU/Linux 10 (buster).
+
 Please submit your solution by emailing a link to [hiring@truss.works](mailto:hiring@truss.works). More details on what we are looking for are included in each problem description linked to below.
