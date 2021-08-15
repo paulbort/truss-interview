@@ -1,33 +1,23 @@
-_This is one of the steps in the Truss interview process. If you've
-stumbled upon this repository and are interested in a career with
-Truss, [check out our jobs page](https://truss.works/jobs)._
+# Paul Bort's normalize.pl for Truss
 
-# Truss Software Engineering Interview
+## Prerequisites
+* Perl 5.14 or later
+* The Date::Manip module from CPAN
 
-## Introduction and expectations
+This should install all of the prerequisites:
+```bash
+sudo apt-get install perl libdate-manip-perl
+```
 
-Hi there! Please choose *one* of the problems described below. Solve to the best of
-your ability, using the tools you're most comfortable with. Assume
-you're sending your submission in for code review from peers;
-we'll be talking about your submission in your interview in that
-context. **Be sure to click through to the problem descriptions and read the requirements carefully.**
+## To run
 
-We expect this to take less than 4 hours of actual coding time. Please
-submit a working but incomplete solution instead of spending more time
-on it. We're also aware that getting after-hours coding time can be
-challenging; we'd like a submission within a week and if you need more
-time please let us know.
+As specified, the program expects UTF-8 CSV from STDIN
+and produces UTF-8 CSV on STDOUT. For example:
 
-## How to submit your response
+```bash
+perl normalize.pl < sample.csv > output.csv
+```
+
+## Other Notes
 
 Please submit your solution by emailing a link to [hiring@truss.works](mailto:hiring@truss.works). More details on what we are looking for are included in each problem description linked to below.
-
-## Choose one problem to work on
-
-### [CSV normalization](CSV_README.md)
-
-This option involves writing [a command-line program to process CSV data](CSV_README.md).
-
-### [Display data from an API for human consumption](BROWSER_README.md)
-
-This option involves creating [a single page web application that loads data from an API](BROWSER_README.md).
